@@ -1,9 +1,10 @@
 import random
 import pprint
-# adicionar bias
+
 """
 regressao linear
-y = wx + b
+original: y = ax + b
+modelo:   y = wx + s
 
 uso de somente um neuron para achar um
 weight que aproxime uma funcao afim
@@ -20,42 +21,42 @@ solucao gradient descent (brute-force): durante algumas
 iteracoes, usar a derivada no ponto (com um pqn fator de
 aprendizagem arbitrario) como gradiente para aproximar weight
 """
+
 a = random.random() * 10
-DATA = [[i, a * i]
-        for i in range(1, 5)]
+b = random.random() * 10
 
 w = random.random() * 10
+s = random.random() * 10
 
-def cost(w):
+
+DATA = [[i, a * i + b]
+        for i in range(1, 5)]
+
+def cost(w, s):
     result = 0
     for i in range(len(DATA)):
         x = DATA[i][0]
         y = DATA[i][1]
-        _y = x * w
-        
+        _y = x * w + s
+
         result += (y - _y) ** 2
 
     result = result / len(DATA)
     return result
 
-EPS = 1*10**(-2)
-RATE = 1*10**(-2)
+EPS = 5e-5
+RATE = 75e-3
+
+for epoch in range(50):
+    erro = cost(w, s)
+    dcost_w = (cost(w + EPS, s) - cost(w, s)) / EPS
+    dcost_s = (cost(w, s + EPS) - cost(w, s)) / EPS
+    w -= RATE * dcost_w
+    s -= 3 * RATE * dcost_s
+    print(f"epoch: {epoch:2} | MSE: {cost(w, s):15.11f} | y = : {w:.2f}x + {s:.2f}")
+    if erro < cost(w, s):
+        break
 
 print("-" * 50)
-print("DATA:")
-pprint.pp(DATA)
-print()
-print(f"random initial weight: {w}")
-print("-" * 50)
-
-for epoch in range(20):
-    dcost = (cost(w + EPS) - cost(w)) / EPS
-    w -= RATE * dcost
-    print(f"epoch: {epoch:2} | MSE: {cost(w):15.11f} | w: {w:.2f}")
-    
-print("-" * 50)
-print(f"guessed weight: {w:.2f}")
-print(f"true weight: {a:.2f}")
-print(f"accuracy: {(10 - abs(a - w)) * 10:.2f}%")
-
-
+print(f"true:  y = {a:.2f}x + {b:.2f}")
+print(f"guess: y = {w:.2f}x + {s:.2f}")
