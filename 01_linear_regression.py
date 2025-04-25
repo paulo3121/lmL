@@ -16,9 +16,9 @@ ela deve usar alguma metrica de regressao
 usarei MSE, Mean Squared Error
 
 solucao analitica: melhor weight sera o 0 da derivada da fn cost
-solucao brute-force: durante algumas iteracoes, usar a derivada
-no ponto (com um pqn fator de aprendizagem arbitrario) como
-gradiente para aproximar weight
+solucao gradient descent (brute-force): durante algumas
+iteracoes, usar a derivada no ponto (com um pqn fator de
+aprendizagem arbitrario) como gradiente para aproximar weight
 """
 a = random.random() * 10
 DATA = [[i, a * i]
@@ -48,10 +48,10 @@ print()
 print(f"random initial weight: {w}")
 print("-" * 50)
 
-for i in range(20):
+for epoch in range(20):
     dcost = (cost(w + EPS) - cost(w)) / EPS
     w -= RATE * dcost
-    print(f"i: {i:2} | MSE: {cost(w):15.11f} | w: {w:.2f}")
+    print(f"epoch: {epoch:2} | MSE: {cost(w):15.11f} | w: {w:.2f}")
     
 print("-" * 50)
 print(f"guessed weight: {w:.2f}")
