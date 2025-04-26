@@ -22,10 +22,11 @@ def main(order):
 
         cost = cost / len(DATA)
         return cost
-        
-    EPS = 1e-3
-    RATE = 1e-3
-    
+
+    # funcionam bem até ordem 5
+    EPS = 1e-5
+    RATE = 5e-4
+
     def dy(alt_coefs, coefs):
         return (loss(alt_coefs) - loss(coefs)) / EPS
 
@@ -37,7 +38,9 @@ def main(order):
         dcosts = [dy(alt_coef, g_coefs) for alt_coef in alts_coefs]
         for i in range(len_order):
             g_coefs[i] -= dcosts[i] * RATE
+        # if epoch in [100, 1000, 5000, 9999]:
+        #     print(epoch, mlutils.poly_acc(t_coefs, g_coefs))
 
-    print(mlutils.poly_acc(t_coefs, g_coefs))
-    
-main(3)
+    return mlutils.poly_acc(t_coefs, g_coefs)
+
+print(main(3))
