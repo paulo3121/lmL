@@ -52,8 +52,8 @@ for epoch in range(50):
     dcost_s = (cost(w, s + EPS) - cost(w, s)) / EPS
     w -= RATE * dcost_w
     s -= 3 * RATE * dcost_s
-    print(f"epoch: {epoch:2} | MSE: {cost(w, s):15.11f} | y = : {w:.2f}x + {s:.2f}")
+    print(f"epoch: {epoch:2} | MSE: {cost(w, s):15.11f} | coefs: {s:.2f}, {w:.2f}")
 
-print("-" * 50)
+print("-" * 60)
 print(f"true:  y = {a:.2f}x + {b:.2f}")
 print(f"guess: y = {w:.2f}x + {s:.2f}")

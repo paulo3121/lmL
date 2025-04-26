@@ -2,13 +2,14 @@ import random
 import pprint
 
 def main(order):
+    len_order = order + 1
     def poly(coefs, x):
         return sum([coef * (x**i) for i, coef in enumerate(coefs)])
 
-    t_coefs = [random.uniform(-1000, 1000) for i in range(order + 1)]
-    g_coefs = [random.uniform(-1000, 1000) for i in range(order + 1)]
+    t_coefs = [random.uniform(-1000, 1000) for i in range(len_order)]
+    g_coefs = [random.uniform(-1000, 1000) for i in range(len_order)]
     DATA = [[i, poly(t_coefs, i)]
-            for i in sorted([random.uniform(-3, 3) for i in range(50)])]
+            for i in sorted([random.uniform(-2.5, 2.5) for i in range(100)])]
 
     def loss(coefs):
         cost = 0
@@ -32,23 +33,26 @@ def main(order):
     for epoch in range(10000):
         alts_coefs = [[coef + EPS if j == i else coef # existe jeito melhor do que max?
                        for j, coef in enumerate(g_coefs)]
-                       for i in range(4)]
+                       for i in range(len_order)]
 
         dcosts = [dy(alt_coef, g_coefs) for alt_coef in alts_coefs]
-        for i in range(4):
+        for i in range(len_order):
             g_coefs[i] -= dcosts[i] * RATE
 
         # pprint.pprint(alts_coefs, width=60)
         # pprint.pprint(dcosts, width=60)
     # print(g_coefs)
 
-    teste = [(1 - abs(t_coefs[i] - g_coefs[i]) / max(abs(t_coefs[i]), abs(g_coefs[i]), 1)) for i in range(4)]
-    similaridade = sum(teste) / 4
+    teste = [(1 - abs(t_coefs[i] - g_coefs[i]) / max(abs(t_coefs[i]), abs(g_coefs[i]), 1)) for i in range(len_order)]
+    similaridade = sum(teste) / len_order
     print(round(similaridade * 100, 2))
 
     
+main(1)
+main(2)
 main(3)
-main(3)
-main(3)
-main(3)
-main(3)
+main(4)
+main(5)
+main(6)
+main(7)
+main(8)
