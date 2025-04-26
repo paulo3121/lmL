@@ -1,5 +1,6 @@
 import random
 import pprint
+import mlutils
 
 def main(order):
     len_order = order + 1
@@ -28,8 +29,6 @@ def main(order):
     def dy(alt_coefs, coefs):
         return (loss(alt_coefs) - loss(coefs)) / EPS
 
-    # print(t_coefs)
-    # print(g_coefs)
     for epoch in range(10000):
         alts_coefs = [[coef + EPS if j == i else coef # existe jeito melhor do que max?
                        for j, coef in enumerate(g_coefs)]
@@ -39,20 +38,6 @@ def main(order):
         for i in range(len_order):
             g_coefs[i] -= dcosts[i] * RATE
 
-        # pprint.pprint(alts_coefs, width=60)
-        # pprint.pprint(dcosts, width=60)
-    # print(g_coefs)
-
-    teste = [(1 - abs(t_coefs[i] - g_coefs[i]) / max(abs(t_coefs[i]), abs(g_coefs[i]), 1)) for i in range(len_order)]
-    similaridade = sum(teste) / len_order
-    print(round(similaridade * 100, 2))
-
+    print(mlutils.poly_acc(t_coefs, g_coefs))
     
-main(1)
-main(2)
 main(3)
-main(4)
-main(5)
-main(6)
-main(7)
-main(8)
