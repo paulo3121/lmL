@@ -2,8 +2,8 @@ import random
 import pprint
 import mlutils
 
-a = random.uniform(0, 100)
-b = random.uniform(0, 100)
+a = random.uniform(0, 1000)
+b = random.uniform(0, 1000)
 
 w = random.uniform(0, 10)
 s = random.uniform(0, 10)
@@ -26,12 +26,13 @@ def cost(w, s):
 EPS = 5e-5
 RATE = 75e-3
 
-for epoch in range(50):
+for epoch in range(200):
     dcost_w = (cost(w + EPS, s) - cost(w, s)) / EPS
     dcost_s = (cost(w, s + EPS) - cost(w, s)) / EPS
     w -= RATE * dcost_w
-    s -= 3 * RATE * dcost_s
-    print(f"epoch: {epoch:2} | MSE: {cost(w, s):15.11f} | coefs: {s:.2f}, {w:.2f}")
+    s -= RATE * dcost_s
+    if epoch % 25 == 0:
+        print(f"i: {epoch:3} | {w=:2.3} | {s=:3.2} | {dcost_w=:.2} | {dcost_s=:.2}")
 
 print("-" * 60)
 print(f"true:  y = {a:.2f}x + {b:.2f}")

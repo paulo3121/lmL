@@ -2,6 +2,8 @@ import random
 import pprint
 import mlutils
 
+random.seed(15)
+
 def main(order):
     len_order = order + 1
     def poly(coefs, x):
@@ -54,14 +56,15 @@ for i in range(1, 6):
     print(i)
     main(i)
     
-#   a  a  a   b  b  b   c  c   d  d
-# 1 99 99 99  99 99 99  99 99  99 99
-# 2 99 98 91  99 98 99  98 98  98 98
-# 3 95 98 98  98 93 98  93 95  89 69
-# 4 80 96 86  92 51 78  93 93  71 78
-# 5 58 41 87  78 77 40  48 45  68 59
+#   a  a  a   b  b  b   c  c   d  d   e  e  e
+# 1 99 99 99  99 99 99  99 99  99 99  99 99 99
+# 2 99 98 91  99 98 99  98 98  98 98  96 98 98
+# 3 95 98 98  98 93 98  93 95  89 69  99 99 97
+# 4 80 96 86  92 51 78  93 93  71 78  86 96 93
+# 5 58 41 87  78 77 40  48 45  68 59  81 77 59
 
 # a 1e-5 5e-4
 # b 1e-2 5e-4
 # c = a, mas diminuo amostra de 100 para 50
 # d = a, mas diminuo amostra de 100 para 25
+# e = a, mas diminuo amostra de 100 para 75
